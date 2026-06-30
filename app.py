@@ -3,6 +3,10 @@ import streamlit as st
 
 from modules.extractor import DocumentFactory
 
+
+if not st.session_state.get("logged_in", False):
+    st.switch_page("pages/Login.py")
+
 UPLOAD_DIR = "data/uploads"
 
 os.makedirs(
@@ -16,6 +20,19 @@ st.set_page_config(
 )
 
 st.title("Mnemosyne")
+
+st.write(
+    f"Welcome, **{st.session_state['username']}** 👋"
+)
+
+if st.button("Logout"):
+
+    st.session_state.clear()
+
+    st.switch_page("pages/Login.py")
+
+st.divider()
+
 st.subheader(
     "Semantic Document Search System"
 )
