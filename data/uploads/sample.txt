@@ -1,0 +1,5 @@
+Mnemosyne is a semantic document search system.
+
+The platform allows users to upload documents and retrieve relevant information using semantic similarity instead of traditional keyword matching.
+
+This improves information discovery and retrieval accuracy.
