@@ -1,7 +1,5 @@
 import re
 
-# compile()
-
 USERNAME_PATTERN = re.compile(
     r"^[A-Za-z][A-Za-z0-9_]{3,19}$"
 )

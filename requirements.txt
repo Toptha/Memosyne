@@ -1,4 +1,4 @@
-streamlit
+PyQt6
 pymupdf
 python-docx
 sentence-transformers

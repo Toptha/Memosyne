@@ -1,79 +1,21 @@
-import os
-import streamlit as st
+"""Mnemosyne — Semantic Document Search System"""
 
-from modules.extractor import DocumentFactory
+import sys
+
+from PyQt6.QtWidgets import QApplication
+
+from gui.main_window import MnemosyneApp
 
 
-if not st.session_state.get("logged_in", False):
-    st.switch_page("pages/Login.py")
+def main():
 
-UPLOAD_DIR = "data/uploads"
+    app = QApplication(sys.argv)
 
-os.makedirs(
-    UPLOAD_DIR,
-    exist_ok=True
-)
+    window = MnemosyneApp()
+    window.show()
 
-st.set_page_config(
-    page_title="Mnemosyne",
-    layout="wide"
-)
+    sys.exit(app.exec())
 
-st.title("Mnemosyne")
 
-st.write(
-    f"Welcome, **{st.session_state['username']}** 👋"
-)
-
-if st.button("Logout"):
-
-    st.session_state.clear()
-
-    st.switch_page("pages/Login.py")
-
-st.divider()
-
-st.subheader(
-    "Semantic Document Search System"
-)
-
-uploaded_file = st.file_uploader(
-    "Upload Document",
-    type=["pdf", "txt", "docx"]
-)
-
-if uploaded_file:
-
-    file_path = os.path.join(
-        UPLOAD_DIR,
-        uploaded_file.name
-    )
-
-    with open(file_path, "wb") as file:
-        file.write(
-            uploaded_file.getbuffer()
-        )
-
-    document = (
-        DocumentFactory.create_document(
-            file_path
-        )
-    )
-
-    extracted_pages = (
-        document.extract_text()
-    )
-
-    st.success(
-        "Document processed successfully"
-    )
-
-    st.write(
-        f"Pages Extracted: {len(extracted_pages)}"
-    )
-
-    st.subheader("Preview")
-
-    st.text(
-        extracted_pages[0]["text"][:1000]
-    )
+if __name__ == "__main__":
+    main()
