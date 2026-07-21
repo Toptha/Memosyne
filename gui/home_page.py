@@ -85,6 +85,7 @@ class HomePage(QWidget):
     """Main application view after login."""
 
     logout_requested = pyqtSignal()
+    navigate_arxiv = pyqtSignal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -128,6 +129,14 @@ class HomePage(QWidget):
         header_layout.addWidget(self.greeting_label)
 
         header_layout.addSpacing(16)
+
+        search_arxiv_btn = QPushButton("Search arXiv")
+        search_arxiv_btn.setObjectName("logout_btn") # Reusing the style from logout for the header buttons
+        search_arxiv_btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        search_arxiv_btn.clicked.connect(self.navigate_arxiv.emit)
+        header_layout.addWidget(search_arxiv_btn)
+        
+        header_layout.addSpacing(8)
 
         logout_btn = QPushButton("Logout")
         logout_btn.setObjectName("logout_btn")

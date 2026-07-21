@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "title": "Operating Systems",
+        "filename": "os_notes.pdf",
+        "file_type": "pdf",
+        "pages": 125,
+        "uploaded_by": "Pree",
+        "category": "Operating Systems",
+        "upload_date": "2026-07-21",
+        "size_kb": 2450,
+        "status": "Indexed"
+    },
+    {
+        "id": 2,
+        "title": "Computer Networks",
+        "filename": "cn_notes.pdf",
+        "file_type": "pdf",
+        "pages": 95,
+        "uploaded_by": "Pree",
+        "category": "Networking",
+        "upload_date": "2026-07-21",
+        "size_kb": 1800,
+        "status": "Uploaded"
+    },
+    {
+        "id": 3,
+        "title": "DBMS",
+        "filename": "dbms_textbook.pdf",
+        "file_type": "pdf",
+        "pages": 300,
+        "uploaded_by": "Pree",
+        "category": "Database",
+        "upload_date": "2026-07-20",
+        "size_kb": 5200,
+        "status": "Indexed"
+    },
+    {
+        "id": 4,
+        "title": "NLP Notes",
+        "filename": "nlp_lecture_slides.pdf",
+        "file_type": "pdf",
+        "pages": 45,
+        "uploaded_by": "Pree",
+        "category": "AI/ML",
+        "upload_date": "2026-07-19",
+        "size_kb": 950,
+        "status": "Indexed"
+    },
+    {
+        "id": 5,
+        "title": "Machine Learning",
+        "filename": "ml_cheatsheet.docx",
+        "file_type": "docx",
+        "pages": 12,
+        "uploaded_by": "Pree",
+        "category": "AI/ML",
+        "upload_date": "2026-07-18",
+        "size_kb": 350,
+        "status": "Uploaded"
+    },
+    {
+        "id": 6,
+        "title": "Python Guide",
+        "filename": "python_best_practices.txt",
+        "file_type": "txt",
+        "pages": 80,
+        "uploaded_by": "Pree",
+        "category": "Programming",
+        "upload_date": "2026-07-17",
+        "size_kb": 120,
+        "status": "Indexed"
+    },
+    {
+        "id": 7,
+        "title": "Linux Manual",
+        "filename": "linux_cmd.pdf",
+        "file_type": "pdf",
+        "pages": 150,
+        "uploaded_by": "Pree",
+        "category": "Operating Systems",
+        "upload_date": "2026-07-16",
+        "size_kb": 3100,
+        "status": "Uploaded"
+    },
+    {
+        "id": 8,
+        "title": "Research Paper",
+        "filename": "attention_is_all_you_need.pdf",
+        "file_type": "pdf",
+        "pages": 15,
+        "uploaded_by": "Pree",
+        "category": "AI/ML",
+        "upload_date": "2026-07-15",
+        "size_kb": 2200,
+        "status": "Indexed"
+    },
+    {
+        "id": 9,
+        "title": "AI Notes",
+        "filename": "intro_to_ai.pdf",
+        "file_type": "pdf",
+        "pages": 110,
+        "uploaded_by": "Pree",
+        "category": "AI/ML",
+        "upload_date": "2026-07-14",
+        "size_kb": 4100,
+        "status": "Uploaded"
+    },
+    {
+        "id": 10,
+        "title": "Data Structures",
+        "filename": "dsa_algo.docx",
+        "file_type": "docx",
+        "pages": 200,
+        "uploaded_by": "Pree",
+        "category": "Programming",
+        "upload_date": "2026-07-13",
+        "size_kb": 2800,
+        "status": "Indexed"
+    }
+]

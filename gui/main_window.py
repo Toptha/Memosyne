@@ -9,6 +9,7 @@ from gui.theme import STYLESHEET
 from gui.login_page import LoginPage
 from gui.register_page import RegisterPage
 from gui.home_page import HomePage
+from gui.arxiv_page import ArxivPage
 
 
 class MnemosyneApp(QMainWindow):
@@ -32,10 +33,12 @@ class MnemosyneApp(QMainWindow):
         self.login_page = LoginPage()
         self.register_page = RegisterPage()
         self.home_page = HomePage()
+        self.arxiv_page = ArxivPage()
 
         self.stack.addWidget(self.login_page)
         self.stack.addWidget(self.register_page)
         self.stack.addWidget(self.home_page)
+        self.stack.addWidget(self.arxiv_page)
 
         # ── Wire signals ────────────────────────────────
         # Login → Home
@@ -61,6 +64,14 @@ class MnemosyneApp(QMainWindow):
             self._on_logout
         )
 
+        # Home ↔ Arxiv navigation
+        self.home_page.navigate_arxiv.connect(
+            self._on_navigate_arxiv
+        )
+        self.arxiv_page.navigate_home.connect(
+            lambda: self._go_to(self.home_page)
+        )
+
         # Start on login page
         self.stack.setCurrentWidget(self.login_page)
 
@@ -72,8 +83,14 @@ class MnemosyneApp(QMainWindow):
 
     def _on_login_success(self, username: str, email: str):
         """Handle successful login — switch to home."""
+        self.username = username
         self.home_page.set_user(username, email)
         self.stack.setCurrentWidget(self.home_page)
+
+    def _on_navigate_arxiv(self):
+        """Handle navigating to the arXiv search page."""
+        self.arxiv_page.set_user(self.username)
+        self._go_to(self.arxiv_page)
 
     def _on_logout(self):
         """Handle logout — reset and return to login."""
