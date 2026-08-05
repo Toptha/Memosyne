@@ -111,6 +111,23 @@ def count() -> int:
     return _get_collection().count()
 
 
+def list_documents() -> list[dict]:
+    """
+    Returns one entry per distinct document currently in the store:
+      { "document_id": ..., "chunk_count": int }
+    Used by the UI to show what's already been ingested.
+    """
+    collection = _get_collection()
+    all_rows = collection.get(include=["metadatas"])
+
+    counts: dict[str, int] = {}
+    for meta in all_rows["metadatas"]:
+        doc_id = meta.get("document_id", "unknown")
+        counts[doc_id] = counts.get(doc_id, 0) + 1
+
+    return [{"document_id": doc_id, "chunk_count": n} for doc_id, n in sorted(counts.items())]
+
+
 if __name__ == "__main__":
     import sys
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "parsing"))
