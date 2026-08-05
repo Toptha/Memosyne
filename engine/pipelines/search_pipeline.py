@@ -16,16 +16,19 @@ try:
     from ..generation.prompt_builder import build_prompt
     from ..generation.response_generator import generate_answer
     from ..generation.citations import extract_citations, format_sources_block
+    from ..conversation.memory import ConversationMemory
 except ImportError:
     import sys
     base = Path(__file__).resolve().parent.parent
     sys.path.insert(0, str(base / "embeddings"))
     sys.path.insert(0, str(base / "generation"))
+    sys.path.insert(0, str(base / "conversation"))
     from encoder import embed_query
     from vector_store import query as vector_query
     from prompt_builder import build_prompt
     from response_generator import generate_answer
     from citations import extract_citations, format_sources_block
+    from memory import ConversationMemory
 
 DEFAULT_TOP_K = 5
 
@@ -76,16 +79,48 @@ def ask(
     }
 
 
+def ask_with_memory(
+    memory: ConversationMemory,
+    question: str,
+    document_id: str | None = None,
+    top_k: int = DEFAULT_TOP_K,
+) -> dict:
+    """
+    Same as ask(), but pulls conversation history from `memory`
+    automatically and records this exchange into it afterward. This
+    is what the UI should call for an ongoing chat session - ask()
+    stays available directly for one-off/stateless queries.
+
+    Note: retrieval itself still searches using only the raw
+    question text, not a history-resolved version of it - so a
+    follow-up like "summarize that" may retrieve weakly on its own,
+    even though the LLM can still resolve "that" from the history
+    included in the prompt. Good enough for now; a query-rewriting
+    step (using history to rewrite the question before embedding)
+    would improve retrieval on pronoun-heavy follow-ups later.
+    """
+    history = memory.get_context_for_prompt()
+    result = ask(question, document_id=document_id, top_k=top_k, conversation_history=history)
+
+    memory.add_user_message(question)
+    memory.add_assistant_message(result["answer"])
+
+    return result
+
+
 if __name__ == "__main__":
     import sys
 
     if len(sys.argv) < 2:
-        print("Usage: python search_pipeline.py <question> [document_id]")
+        print("Usage: python search_pipeline.py <question1> [question2] [question3] ...")
+        print("Each question is asked in sequence within the SAME conversation, so later")
+        print("questions can reference earlier ones (e.g. 'summarize that').")
         sys.exit(1)
 
-    q = sys.argv[1]
-    doc_id = sys.argv[2] if len(sys.argv) > 2 else None
+    memory = ConversationMemory()
 
-    result = ask(q, document_id=doc_id)
-    print(result["answer"])
-    print(result["sources_block"])
+    for q in sys.argv[1:]:
+        print(f"\n>>> {q}")
+        result = ask_with_memory(memory, q)
+        print(result["answer"])
+        print(result["sources_block"])
